@@ -14,7 +14,7 @@ const owner = require("./UserPass.js").owner;
 const fs = require('fs');
 const combinate = require("parsimmon");
 const request = require('request');
-//var youtubedl = require('youtube-dl');
+var youtubedl = require('youtube-dl');
 const querystring = require('querystring');
 const fp = require('path');
 const reload = require('require-reload')(require);
@@ -43,7 +43,7 @@ function loadModules(){
 			try{loadModule(file);}catch(e){console.log(e);}
 		});
 		console.log("===================================================");
-		//watchModules();
+		watchModules();
 	});
 }
 Reloading=[];
@@ -507,7 +507,7 @@ bot.on('messageUpdate', function(nothing,rawEvent){
 	if(rawEvent.id in data.ownMsgs){return;}
 	if(!message)return;
 	if(rawEvent.cancelled)return;
-	//console.log(message);
+	console.log(message);
 	init=utils.chanData[channelId].settings.comInit;
 	if((init!=""&&message.startsWith(init))||message.startsWith("<@"+utils.ownId+">")||message.startsWith("<@!"+utils.ownId+">")){
 		if(Object.keys(lastCommand).indexOf(user.id)>-1){
@@ -525,7 +525,7 @@ bot.on('messageUpdate', function(nothing,rawEvent){
 				return;
 			}
 		}
-		//if(data.commandReplies[rawEvent.d.id]){utils.delMSG(channelId,data.commandReplies[rawEvent.d.id]);console.log("Deleted "+data.commandReplies[rawEvent.d.id]+"!");}
+		if(data.commandReplies[rawEvent.d.id]){utils.delMSG(channelId,data.commandReplies[rawEvent.d.id]);console.log("Deleted "+data.commandReplies[rawEvent.d.id]+"!");}
 		if(message.startsWith("<@!"+utils.ownId+">"))message.replace("<@!"+utils.ownId+">","<@"+utils.ownId+">");
 		comd = message.substr((init!=""&&message.startsWith(init))?init.length:("<@"+utils.ownId+">").length).trim().split(" ")[0].toLowerCase();
 		args = message.substr((init!=""&&message.startsWith(init))?init.length:("<@"+utils.ownId+">").length).trim().split(" ");args.shift();
@@ -622,7 +622,7 @@ bot.on('ccreate', function(channel){
 });
 var lastHeartbeat = -1;
 bot.on('any', function(event){
-	//console.log(event);
+	console.log(event);
 	if(event.op === 11){
 		console.log("ping :"+Date.now()+" - "+lastHeartbeat+" = "+(Date.now() - lastHeartbeat));
 		utils.botPing = Date.now() - lastHeartbeat;
@@ -650,7 +650,7 @@ function msgDelQueue(){
 		msg_del = data.persistent.delQueue[msg_id];
 		if(msg_del[2]<(new Date).getTime()){utils.delMSG(msg_del[0],msg_del[1]);delete data.persistent.delQueue[msg_id];}
 	}
-	//data.persistent.delQueue;
+	data.persistent.delQueue;
 }
 /****************** CORE UTILS ********************/
 function stringifyEmoji(emoji) {
